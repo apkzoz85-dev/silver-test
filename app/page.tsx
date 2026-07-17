@@ -3,11 +3,11 @@ import{useState,useEffect,useRef,FormEvent}from"react";
 import{useRouter}from"next/navigation";
 
 const P="01001050018",PD="0100 105 0018",PI="+201001050018",WN="201001050018";
-const WK="325afe41-583c-4a59-83c5-17939346616e";
+const WK="14be81e6-21a3-4887-8efe-69b2cd01061d";
 
 function trackCall(l="call"){if(typeof window!=="undefined"&&(window as any).gtag)(window as any).gtag("event","click_call",{event_category:"contact",event_label:l});}
-function trackWA(l="wa"){if(typeof window!=="undefined"&&(window as any).gtag)(window as any).gtag("event","click_whatsapp",{event_category:"contact",event_label:l});}
-function trackLead(l="form"){if(typeof window!=="undefined"&&(window as any).gtag)(window as any).gtag("event","generate_lead",{event_category:"lead",event_label:l});}
+function trackWA(l="wa"){if(typeof window!=="undefined"&&(window as any).gtag){(window as any).gtag("event","conversion",{send_to:"AW-18216441738/Yd3hCKjjh9IcEIqvo-5D",value:1.0,currency:"EGP"});(window as any).gtag("event","click_whatsapp",{event_category:"contact",event_label:l});}}
+function trackLead(l="form"){if(typeof window!=="undefined"&&(window as any).gtag){(window as any).gtag("event","conversion",{send_to:"AW-18216441738/o_zeCKXjh9IcEIqvo-5D",value:1.0,currency:"EGP"});(window as any).gtag("event","generate_lead",{event_category:"lead",event_label:l});}}
 
 const IMG={
   hero:"https://ora.properties-eg.com/hero-luxury.webp",
