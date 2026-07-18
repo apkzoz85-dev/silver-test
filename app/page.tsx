@@ -68,7 +68,8 @@ const T={
     ft_legal:"صفحة تسويقية. جميع الأسعار والمساحات استرشادية وقابلة للتغيير من المطور بدون إشعار. العلامات التجارية (أورا، سيلفر ساندس) ملك لأصحابها.",
     mob_call:"اتصل",mob_wa:"واتساب",mob_reg:"سجّل الآن",
     pop_h:"سيلفر ساندس أورا — حمّل البرشور",pop_sub:"أدخل رقمك لتحميل البرشور الكامل بالأسعار وخطط السداد.",
-    pop_phone:"الموبايل / واتساب",pop_submit:"حمّل البرشور",
+    pop_phone:"الموبايل / واتساب",pop_name:"الاسم الكامل",pop_submit:"حمّل البرشور",
+    pop_requests:["اختار طلبك","أسعار Silver Bay","أسعار Silver Walk","أسعار كل الوحدات","نظام السداد والتقسيط","حجز موعد زيارة","استشارة استثمارية"],
     pop_done_h:"تم! البرشور في الطريق",pop_done_p:"لو ما فتحش تلقائياً، مستشار سيلفر ساندس أورا هيبعتهولك على الواتساب فوراً.",
     prv_title:"سياسة الخصوصية",prv_text:"نجمع الاسم والهاتف والإيميل فقط عند تعبئة النموذج — للتواصل بخصوص سيلفر ساندس أورا. بياناتك مشفرة ومحمية. لا نبيع أو نشارك بياناتك.",
   },
@@ -118,7 +119,8 @@ const T={
     ft_legal:"Marketing landing page. All prices, areas and plans are indicative and subject to change by the developer without notice. Trademarks (ORA, Silver Sands) belong to their owners.",
     mob_call:"Call",mob_wa:"WhatsApp",mob_reg:"Register now",
     pop_h:"Silver Sands ORA — Download Brochure",pop_sub:"Enter your number to download the full brochure with prices and payment plans.",
-    pop_phone:"Mobile / WhatsApp",pop_submit:"Download brochure",
+    pop_phone:"Mobile / WhatsApp",pop_name:"Full name",pop_submit:"Download brochure",
+    pop_requests:["Choose your request","Silver Bay prices","Silver Walk prices","All unit prices","Payment plans","Book a site visit","Investment consultation"],
     pop_done_h:"Done! Your brochure is on the way",pop_done_p:"If it did not open automatically, a Silver Sands ORA advisor will send it to you on WhatsApp right away.",
     prv_title:"Privacy Policy",prv_text:"We collect name, phone, and email only via the form — to contact you about Silver Sands ORA. Your data is encrypted and protected. We never sell or share your data.",
   },
@@ -394,7 +396,9 @@ export default function Home(){
         <p className="pop-sub">{t.pop_sub}</p>
         <form ref={pr} onSubmit={submitBrochure}>
           <input type="hidden" name="access_key" value={WK}/><input type="hidden" name="subject" value="Brochure — Silver Sands ORA"/><input type="hidden" name="from_name" value="SS Brochure"/><input type="checkbox" name="botcheck" style={{display:"none"}}/>
+          <div className="ff"><input name="name" placeholder={t.pop_name} required/></div>
           <div className="ff"><input name="phone" type="tel" placeholder={t.pop_phone} required/></div>
+          <div className="ff"><select name="request">{t.pop_requests.map((r,i)=><option key={i} value={i===0?"":r}>{r}</option>)}</select></div>
           <button type="submit" className="btn-primary" disabled={ps==="sending"}>{ps==="sending"?"...":t.pop_submit}</button>
         </form></>}
       </div>
