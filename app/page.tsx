@@ -7,14 +7,14 @@ import { IMG } from "@/lib/images";
 import { trackCall, trackFormLead, trackWhatsApp } from "@/lib/tracking";
 
 // ============================================================
-// بيانات التواصل — Silver Walk & Silver Bay (Silversands / ORA)
+// بيانات التواصل — Silversands (Silver Walk & Silver Bay / ORA)
 // ============================================================
 const PHONE = "01123863254";
 const PHONE_DISPLAY = "011 2386 3254";
 const PHONE_INTL = "+201123863254";
 const WA_NUMBER = "201123863254";
 const WA_MESSAGE = encodeURIComponent(
-  "مرحبًا، مهتم بأسعار وتفاصيل سيلفر ووك & سيلفر باي في سيلفر ساندس الساحل الشمالي 🌊"
+  "مرحبًا، أريد أحدث أسعار وتوافر سيلفر ساندس (سيلفر ووك & سيلفر باي) 🌊"
 );
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
@@ -40,16 +40,8 @@ function useReveal() {
   }, []);
 }
 
-/* ============ Lead Form (used in hero + bottom section) ============ */
-function LeadForm({
-  lang,
-  compact,
-  source,
-}: {
-  lang: Lang;
-  compact?: boolean;
-  source: string;
-}) {
+/* ============ Lead Form ============ */
+function LeadForm({ lang, source }: { lang: Lang; source: string }) {
   const t = content[lang].form;
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
@@ -66,7 +58,7 @@ function LeadForm({
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3_KEY,
-          subject: "New Lead — Silver Walk & Silver Bay (Silversands)",
+          subject: "New Lead — Silversands (Silver Walk & Silver Bay)",
           from_name: "Silversands Landing",
           botcheck: "",
           name: data.get("name"),
@@ -91,7 +83,7 @@ function LeadForm({
   }
 
   const field =
-    "w-full rounded-xl px-4 py-3 bg-white border border-ink/15 text-ink placeholder:text-ink/40 focus:border-champagne transition";
+    "w-full rounded-xl px-4 py-3.5 bg-white border border-[var(--line)] text-ink placeholder:text-ink/40 focus:border-ocean transition";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3.5">
@@ -101,10 +93,8 @@ function LeadForm({
         name="phone" type="tel" inputMode="tel" required placeholder={`${t.phone} *`}
         aria-label={t.phone} className={field}
       />
-      {!compact && (
-        <input name="email" type="email" placeholder={t.email} aria-label={t.email} className={field} />
-      )}
-      <div className={compact ? "space-y-3.5" : "grid sm:grid-cols-2 gap-3.5"}>
+      <input name="email" type="email" placeholder={t.email} aria-label={t.email} className={field} />
+      <div className="grid sm:grid-cols-2 gap-3.5">
         <select name="unit" aria-label={t.unit} className={field} defaultValue={t.unitOptions[0]}>
           {t.unitOptions.map((o) => (
             <option key={o} value={o}>{o}</option>
@@ -116,14 +106,11 @@ function LeadForm({
           ))}
         </select>
       </div>
-      <button
-        type="submit" disabled={submitting}
-        className="btn-gold w-full rounded-xl py-4 text-lg disabled:opacity-60"
-      >
+      <button type="submit" disabled={submitting} className="btn-gold w-full rounded-full py-4 text-lg disabled:opacity-60">
         {submitting ? t.submitting : t.submit}
       </button>
-      {error && <p className="text-red-500 text-sm text-center">{t.error}</p>}
-      <p className="text-[11px] leading-relaxed text-ink/45 text-center">{t.disclosure}</p>
+      {error && <p className="text-red-600 text-sm text-center">{t.error}</p>}
+      <p className="text-[11px] leading-relaxed text-ink/50 text-center">{t.disclosure}</p>
     </form>
   );
 }
@@ -175,12 +162,15 @@ export default function Page() {
   const onCall = () => trackCall();
   const onWa = () => trackWhatsApp();
 
-  const sectionHead = (eyebrow: string, title: string, dark?: boolean) => (
+  const updated = new Intl.DateTimeFormat(lang === "ar" ? "ar-EG" : "en-US", {
+    month: "long",
+    year: "numeric",
+  }).format(new Date());
+
+  const sectionHead = (eyebrow: string, title: string, light?: boolean) => (
     <div className="reveal mb-10">
-      <p className={`text-sm font-bold tracking-wider mb-2 ${dark ? "text-champagne" : "text-[#a5812f]"}`}>
-        — {eyebrow}
-      </p>
-      <h2 className={`display-ar text-3xl sm:text-[2.6rem] ${dark ? "text-silver-bright" : "text-night"}`}>
+      <p className={`eyebrow-gold mb-3 ${light ? "" : ""}`}>{eyebrow}</p>
+      <h2 className={`text-3xl sm:text-[2.5rem] leading-snug ${light ? "text-white" : "text-navy"} ${lang === "en" ? "display-en font-semibold" : "display-ar"}`}>
         {title}
       </h2>
     </div>
@@ -188,33 +178,33 @@ export default function Page() {
 
   return (
     <main className="min-h-screen overflow-x-clip">
-      {/* ===== Urgency top bar ===== */}
-      <div className="bg-gradient-to-l from-[#c2933f] via-[#e9c87f] to-[#c2933f] text-night text-center text-[13px] sm:text-sm font-bold py-2 px-3">
-        {t.topBar}
+      {/* ===== Top bar ===== */}
+      <div className="bg-navy-deep text-center text-[13px] sm:text-sm py-2 px-3">
+        <span className="text-gold font-bold">{t.topBar}</span>
       </div>
 
       {/* ===== Header ===== */}
-      <header className="sticky top-0 z-40 bg-night/90 backdrop-blur-md border-b border-silver/10">
+      <header className="sticky top-0 z-40 bg-paper/92 backdrop-blur-md border-b border-[var(--line)]">
         <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between gap-2">
           <div className="flex items-baseline gap-2 min-w-0">
-            <span className="display-en text-xl silver-text whitespace-nowrap">Silversands</span>
-            <span className="text-champagne text-[11px] hidden sm:inline whitespace-nowrap">
+            <span className="display-en text-[1.35rem] font-semibold text-navy whitespace-nowrap">Silversands</span>
+            <span className="text-ink/55 text-[11px] hidden sm:inline whitespace-nowrap">
               {lang === "ar" ? "سيدي حنيش · الساحل الشمالي" : "Sidi Heneish · North Coast"}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-              className="btn-ghost text-sm rounded-full px-3 py-1.5"
+              className="btn-outline-navy text-sm rounded-full px-3.5 py-1.5"
               aria-label="Switch language"
             >
               {t.langLabel}
             </button>
             <a
               href={`tel:${PHONE_INTL}`} onClick={onCall} dir="ltr"
-              className="hidden md:inline-block btn-ghost text-sm rounded-full px-4 py-1.5"
+              className="hidden md:inline-block btn-outline-navy text-sm rounded-full px-4 py-1.5"
             >
-              📞 {PHONE_DISPLAY}
+              {PHONE_DISPLAY}
             </a>
             <button onClick={scrollToForm} className="btn-gold text-sm rounded-full px-4 sm:px-5 py-2 whitespace-nowrap">
               {t.nav.register}
@@ -223,64 +213,72 @@ export default function Page() {
         </div>
       </header>
 
-      {/* ===== Hero ===== */}
-      <section className="hero-night relative">
-        {/* Hero render (official) — run scripts/download-images.mjs to localize */}
+      {/* ===== Hero (reference style: full photo, light overlay) ===== */}
+      <section className="relative min-h-[92vh] flex items-center">
         <div
-          className="absolute inset-0 img-cover opacity-55"
+          className="absolute inset-0 img-cover"
           style={{ backgroundImage: `url('${IMG.hero}')` }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night/80 via-night/30 to-night" aria-hidden="true" />
-        <div className="relative mx-auto max-w-6xl px-4 pt-14 pb-20 sm:pt-20 sm:pb-24 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
-          <div>
-            <p className="text-champagne text-sm sm:text-base font-semibold tracking-wide mb-4">
-              {t.hero.eyebrow}
-            </p>
-            <h1 className="display-ar text-4xl sm:text-6xl leading-[1.2] mb-2">
-              <span className="silver-text">{t.hero.title1}</span>
-            </h1>
-            <p className="display-ar text-2xl sm:text-4xl gold-text mb-6">{t.hero.title2}</p>
-            <p className="max-w-xl text-silver-bright/85 text-base sm:text-lg leading-relaxed mb-6">
-              {t.hero.sub}
-            </p>
-            <ul className="space-y-2.5 mb-8">
-              {t.hero.bullets.map((b, i) => (
-                <li key={i} className="flex items-center gap-3 text-silver-bright">
-                  <span className="text-champagne">◆</span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="flex flex-wrap gap-3 mb-6">
-              <button onClick={scrollToForm} className="btn-gold rounded-full px-8 py-4 text-lg">
-                {t.hero.cta}
-              </button>
-              <a
-                href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer"
-                className="btn-wa rounded-full px-7 py-4 text-lg inline-flex items-center gap-2"
-              >
-                <WaIcon /> {t.hero.ctaWa}
-              </a>
-            </div>
-            <p className="text-sm text-silver/70">✓ {t.hero.trust}</p>
+        <div className="absolute inset-0 bg-[#0c2434]/42" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-paper" aria-hidden="true" />
+
+        <div className="relative mx-auto max-w-6xl px-4 py-20 w-full">
+          <p className="eyebrow-gold mb-4">{t.hero.eyebrow}</p>
+          <h1
+            className={`text-white mb-3 ${
+              lang === "en"
+                ? "display-en font-semibold text-5xl sm:text-7xl"
+                : "display-ar text-4xl sm:text-6xl"
+            }`}
+            style={{ textShadow: "0 2px 24px rgba(0,0,0,0.35)" }}
+          >
+            {t.hero.title1}
+          </h1>
+          <p className={`text-gold mb-6 ${lang === "en" ? "display-en italic text-2xl sm:text-3xl" : "display-ar text-xl sm:text-3xl"}`}>
+            {t.hero.title2}
+          </p>
+          <p className="max-w-2xl text-white/95 text-base sm:text-lg leading-relaxed mb-7" style={{ textShadow: "0 1px 12px rgba(0,0,0,0.3)" }}>
+            {t.hero.sub}
+          </p>
+
+          {/* Pills */}
+          <div className="flex flex-wrap gap-3 mb-8">
+            {t.hero.badges.map((b, i) => (
+              <span key={i} className="pill-hero rounded-full px-4 py-2 text-sm">{b}</span>
+            ))}
+            <span className="pill-hero rounded-full px-4 py-2 text-sm" suppressHydrationWarning>
+              {lang === "ar" ? `آخر تحديث: ${updated}` : `Last updated: ${updated}`}
+            </span>
           </div>
 
-          {/* Hero lead form */}
-          <div className="card-sand rounded-3xl p-6 sm:p-7 lg:mt-0">
-            <h2 className="display-ar text-2xl text-night mb-1">{t.heroForm.title}</h2>
-            <p className="text-sm text-ink/60 mb-5">{t.heroForm.sub}</p>
-            <LeadForm lang={lang} compact source="hero" />
+          {/* Buttons row (gold / ghost / teal) */}
+          <div className="flex flex-wrap gap-3 mb-7">
+            <button onClick={scrollToForm} className="btn-gold rounded-full px-8 py-4 text-base sm:text-lg">
+              {t.hero.cta}
+            </button>
+            <button onClick={scrollToForm} className="btn-ghost-hero rounded-full px-7 py-4 text-base sm:text-lg">
+              {t.hero.ctaGhost}
+            </button>
+            <a
+              href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer"
+              className="btn-wa rounded-full px-7 py-4 text-base sm:text-lg inline-flex items-center gap-2"
+            >
+              <WaIcon /> {t.hero.ctaWa}
+            </a>
           </div>
+          <p className="text-sm text-white/85" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.3)" }}>
+            ✓ {t.hero.trust}
+          </p>
         </div>
       </section>
 
-      {/* ===== Promenade marquee ===== */}
-      <div className="bg-night-2 border-y border-silver/10 py-3.5 overflow-hidden" dir="ltr">
+      {/* ===== Marquee ===== */}
+      <div className="bg-cream border-y border-[var(--line)] py-3.5 overflow-hidden" dir="ltr">
         <div className="marquee-track">
           {[...t.marquee, ...t.marquee].map((m, i) => (
-            <span key={i} className="mx-5 whitespace-nowrap text-silver-bright/80 text-sm flex items-center gap-5">
-              {m} <span className="text-champagne">✦</span>
+            <span key={i} className="mx-5 whitespace-nowrap text-navy/80 text-sm flex items-center gap-5">
+              {m} <span className="text-gold-deep">✦</span>
             </span>
           ))}
         </div>
@@ -291,8 +289,8 @@ export default function Page() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4">
           {t.stats.map((s, i) => (
             <div key={i} className="reveal text-center">
-              <div className="display-en text-3xl sm:text-4xl gold-text" dir="ltr">{s.value}</div>
-              <div className="text-sm text-silver/75 mt-1.5">{s.label}</div>
+              <div className="display-en font-semibold text-3xl sm:text-4xl text-navy" dir="ltr">{s.value}</div>
+              <div className="text-sm text-ink/60 mt-1.5">{s.label}</div>
             </div>
           ))}
         </div>
@@ -302,95 +300,90 @@ export default function Page() {
       {/* ===== About destination ===== */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20 grid lg:grid-cols-2 gap-10 items-center">
         <div className="reveal">
-          {sectionHead(t.about.eyebrow, t.about.title, true)}
-          <p className="text-lg leading-relaxed text-silver-bright/85 mb-4">{t.about.body}</p>
-          <p className="text-lg leading-relaxed text-silver-bright/85 mb-8">{t.about.body2}</p>
-          <button onClick={scrollToForm} className="btn-gold rounded-full px-7 py-3.5">
+          {sectionHead(t.about.eyebrow, t.about.title)}
+          <p className="text-lg leading-relaxed text-ink/80 mb-4 -mt-4">{t.about.body}</p>
+          <p className="text-lg leading-relaxed text-ink/80 mb-8">{t.about.body2}</p>
+          <button onClick={scrollToForm} className="btn-ocean rounded-full px-7 py-3.5 text-sm sm:text-base uppercase tracking-wider">
             {t.about.cta}
           </button>
         </div>
         <div
-          className="reveal rounded-3xl h-72 sm:h-96 img-cover border border-silver/15"
-          style={{
-            backgroundImage:
-              `linear-gradient(150deg, rgba(214,183,124,0.18), rgba(8,22,37,0.35)), url('${IMG.destination}'), radial-gradient(600px 300px at 30% 20%, #14304c, #0c2136)`,
-          }}
+          className="reveal rounded-3xl h-72 sm:h-96 img-cover card"
+          style={{ backgroundImage: `url('${IMG.destination}')` }}
           role="img"
           aria-label="Silversands"
         />
       </section>
 
-      {/* ===== Location ===== */}
-      <section className="bg-night-2 border-y border-silver/10 py-16 sm:py-20">
+      {/* ===== Location (soft blue band) ===== */}
+      <section className="bg-sky-tint border-y border-[var(--line)] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
-          {sectionHead(t.location.eyebrow, t.location.title, true)}
-          <p className="reveal text-silver-bright/85 text-lg mb-8 -mt-4">{t.location.body}</p>
+          {sectionHead(t.location.eyebrow, t.location.title)}
+          <p className="reveal text-ink/75 text-lg mb-8 -mt-4">{t.location.body}</p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
             {t.location.points.map((p, i) => (
-              <div key={i} className="reveal card-glass rounded-2xl p-5 flex items-center justify-between gap-3">
-                <span className="text-silver-bright font-semibold">{p.place}</span>
-                <span className="gold-text font-bold whitespace-nowrap" dir="ltr">{p.dist}</span>
+              <div key={i} className="reveal chip rounded-2xl p-5 flex items-center justify-between gap-3">
+                <span className="text-navy font-semibold">{p.place}</span>
+                <span className="text-gold-deep font-extrabold whitespace-nowrap" dir="ltr">{p.dist}</span>
               </div>
             ))}
           </div>
-          <button onClick={scrollToForm} className="reveal btn-ghost rounded-full px-7 py-3.5">
-            {t.location.cta} ←
+          <button onClick={scrollToForm} className="reveal btn-outline-navy rounded-full px-7 py-3.5">
+            {t.location.cta}
           </button>
         </div>
       </section>
 
       {/* ===== Launch ===== */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
-        {sectionHead(t.launch.eyebrow, t.launch.title, true)}
-        <p className="reveal max-w-3xl text-lg leading-relaxed text-silver-bright/85 mb-10 -mt-4">
-          {t.launch.body}
-        </p>
+        {sectionHead(t.launch.eyebrow, t.launch.title)}
+        <p className="reveal max-w-3xl text-lg leading-relaxed text-ink/80 mb-10 -mt-4">{t.launch.body}</p>
         <div className="grid sm:grid-cols-2 gap-5">
           {t.launch.features.map((f, i) => (
-            <div key={i} className="reveal card-glass rounded-3xl p-7">
+            <div key={i} className="reveal card rounded-3xl p-7">
               <div className="text-3xl mb-3">{f.icon}</div>
-              <h3 className="display-ar text-xl text-champagne mb-2">{f.title}</h3>
-              <p className="text-silver-bright/80 leading-relaxed">{f.desc}</p>
+              <h3 className="display-ar text-xl text-navy mb-2">{f.title}</h3>
+              <p className="text-ink/70 leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ===== Units (sand section) ===== */}
-      <section className="bg-sand text-ink py-16 sm:py-20">
+      {/* ===== Units (cream band) ===== */}
+      <section className="bg-cream border-y border-[var(--line)] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
           {sectionHead(t.units.eyebrow, t.units.title)}
           <div className="grid md:grid-cols-3 gap-6">
             {t.units.cards.map((c, i) => (
-              <div key={i} className="reveal card-sand rounded-3xl overflow-hidden flex flex-col">
+              <div key={i} className="reveal card rounded-3xl overflow-hidden flex flex-col">
                 <div
                   className="h-44 img-cover relative"
                   style={{
-                    backgroundImage: `linear-gradient(160deg, rgba(8,22,37,0.15), rgba(8,22,37,0.5)), url('${[IMG.unit1, IMG.unit2, IMG.unit3][i]}'), linear-gradient(${140 + i * 40}deg, #14304c, #0c2136 60%, #123a56)`,
+                    backgroundImage: `linear-gradient(180deg, rgba(12,36,52,0.05), rgba(12,36,52,0.35)), url('${[IMG.unit1, IMG.unit2, IMG.unit3][i]}')`,
                   }}
                 >
-                  <span className="absolute top-4 start-4 bg-gradient-to-l from-[#e9c87f] to-[#c2933f] text-night text-xs font-extrabold rounded-full px-3.5 py-1.5">
+                  <span className="absolute top-4 start-4 bg-navy text-white text-xs font-bold rounded-full px-3.5 py-1.5">
                     {c.tag}
                   </span>
-                  <span className="absolute bottom-4 end-4 display-en text-silver-bright text-lg" dir="ltr">
+                  <span className="absolute bottom-3.5 end-4 display-en font-semibold text-white text-lg" dir="ltr" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}>
                     {c.area}
                   </span>
                 </div>
                 <div className="p-7 flex flex-col flex-1">
-                  <h3 className="display-ar text-2xl text-night mb-4">{c.type}</h3>
+                  <h3 className="display-ar text-2xl text-navy mb-4">{c.type}</h3>
                   <ul className="space-y-2 mb-6 flex-1">
                     {c.features.map((f, j) => (
                       <li key={j} className="flex items-start gap-2.5 text-ink/75">
-                        <span className="text-[#a5812f] mt-0.5">✓</span>
+                        <span className="text-teal mt-0.5">✓</span>
                         <span>{f}</span>
                       </li>
                     ))}
                   </ul>
                   <div className="mb-5">
                     <div className="text-xs text-ink/50 mb-0.5">{t.units.priceLabel}</div>
-                    <div className="display-ar text-[1.7rem] text-night">{c.price}</div>
+                    <div className="display-ar text-[1.7rem] text-navy">{c.price}</div>
                   </div>
-                  <button onClick={scrollToForm} className="btn-gold w-full rounded-xl py-3.5">
+                  <button onClick={scrollToForm} className="btn-gold w-full rounded-full py-3.5">
                     {t.units.cta}
                   </button>
                 </div>
@@ -403,32 +396,32 @@ export default function Page() {
 
       {/* ===== Amenities ===== */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
-        {sectionHead(t.amenities.eyebrow, t.amenities.title, true)}
+        {sectionHead(t.amenities.eyebrow, t.amenities.title)}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {t.amenities.items.map((a, i) => (
-            <div key={i} className="reveal card-glass rounded-2xl p-6 text-center">
+            <div key={i} className="reveal chip rounded-2xl p-6 text-center">
               <div className="text-3xl mb-2.5">{a.icon}</div>
-              <div className="text-silver-bright font-semibold text-sm sm:text-base">{a.label}</div>
+              <div className="text-navy font-semibold text-sm sm:text-base">{a.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ===== Payment (sand) ===== */}
-      <section className="bg-sand text-ink py-16 sm:py-20">
+      {/* ===== Payment (soft blue band) ===== */}
+      <section className="bg-sky-tint border-y border-[var(--line)] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
           {sectionHead(t.payment.eyebrow, t.payment.title)}
           <div className="grid sm:grid-cols-3 gap-6 mb-10">
             {t.payment.items.map((p, i) => (
-              <div key={i} className="reveal card-sand rounded-3xl p-8 text-center">
-                <div className="display-en text-6xl gold-text mb-3" dir="ltr">{p.value}</div>
-                <div className="display-ar text-xl text-night mb-1">{p.label}</div>
+              <div key={i} className="reveal card rounded-3xl p-8 text-center">
+                <div className="display-en font-semibold text-6xl text-ocean mb-3" dir="ltr">{p.value}</div>
+                <div className="display-ar text-xl text-navy mb-1">{p.label}</div>
                 <div className="text-sm text-ink/60">{p.desc}</div>
               </div>
             ))}
           </div>
           <div className="reveal text-center">
-            <button onClick={scrollToForm} className="btn-gold rounded-full px-8 py-4 text-lg">
+            <button onClick={scrollToForm} className="btn-ocean rounded-full px-8 py-4 text-sm sm:text-base uppercase tracking-wider">
               {t.payment.cta}
             </button>
           </div>
@@ -439,41 +432,36 @@ export default function Page() {
       <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20 grid lg:grid-cols-2 gap-10 items-center">
         <div className="reveal order-2 lg:order-1">
           <div
-            className="rounded-3xl h-72 sm:h-96 img-cover border border-silver/15 relative"
-            style={{
-              backgroundImage:
-                `linear-gradient(160deg, rgba(8,22,37,0.25), rgba(8,22,37,0.55)), url('${IMG.developer}'), radial-gradient(500px 320px at 70% 30%, #1a3d5c, #0c2136)`,
-            }}
+            className="rounded-3xl h-72 sm:h-96 img-cover card relative"
+            style={{ backgroundImage: `url('${IMG.developer}')` }}
             role="img"
             aria-label="ORA Developers"
           >
-            <span className="absolute bottom-5 start-5 bg-night/80 border border-champagne/40 text-champagne text-sm font-bold rounded-full px-4 py-2">
+            <span className="absolute bottom-5 start-5 bg-white/90 backdrop-blur border border-[var(--line)] text-navy text-sm font-bold rounded-full px-4 py-2">
               {t.developer.badge}
             </span>
           </div>
         </div>
         <div className="reveal order-1 lg:order-2">
-          {sectionHead(t.developer.eyebrow, t.developer.title, true)}
-          <p className="text-lg leading-relaxed text-silver-bright/85 mb-6 -mt-4">{t.developer.body}</p>
+          {sectionHead(t.developer.eyebrow, t.developer.title)}
+          <p className="text-lg leading-relaxed text-ink/80 mb-6 -mt-4">{t.developer.body}</p>
           <div className="flex flex-wrap gap-2.5">
             {t.developer.projects.map((p, i) => (
-              <span key={i} className="border border-silver/25 text-silver-bright/85 text-sm rounded-full px-4 py-2">
-                {p}
-              </span>
+              <span key={i} className="chip text-navy/85 text-sm rounded-full px-4 py-2">{p}</span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== Why us (sand) ===== */}
-      <section className="bg-sand text-ink py-16 sm:py-20">
+      {/* ===== Why us (cream) ===== */}
+      <section className="bg-cream border-y border-[var(--line)] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
           {sectionHead(t.why.eyebrow, t.why.title)}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {t.why.items.map((w, i) => (
-              <div key={i} className="reveal border-t-[3px] border-[#c2933f] pt-5">
+              <div key={i} className="reveal border-t-[3px] border-gold-deep pt-5">
                 <div className="text-2xl mb-2">{w.icon}</div>
-                <h3 className="display-ar text-lg text-night mb-2">{w.title}</h3>
+                <h3 className="display-ar text-lg text-navy mb-2">{w.title}</h3>
                 <p className="text-ink/70 leading-relaxed text-[15px]">{w.desc}</p>
               </div>
             ))}
@@ -483,39 +471,41 @@ export default function Page() {
 
       {/* ===== FAQ ===== */}
       <section className="mx-auto max-w-4xl px-4 py-16 sm:py-20">
-        {sectionHead(t.faq.eyebrow, t.faq.title, true)}
+        {sectionHead(t.faq.eyebrow, t.faq.title)}
         <div className="space-y-3">
           {t.faq.items.map((f, i) => (
-            <details key={i} className="reveal card-glass rounded-2xl group">
+            <details key={i} className="reveal card rounded-2xl group">
               <summary className="cursor-pointer list-none p-5 sm:p-6 flex items-center justify-between gap-4">
-                <span className="font-bold text-silver-bright">{f.q}</span>
-                <span className="text-champagne text-xl transition-transform group-open:rotate-45 shrink-0">+</span>
+                <span className="font-bold text-navy">{f.q}</span>
+                <span className="text-gold-deep text-xl transition-transform group-open:rotate-45 shrink-0">+</span>
               </summary>
-              <p className="px-5 sm:px-6 pb-6 text-silver-bright/80 leading-relaxed">{f.a}</p>
+              <p className="px-5 sm:px-6 pb-6 text-ink/75 leading-relaxed">{f.a}</p>
             </details>
           ))}
         </div>
       </section>
 
-      {/* ===== Bottom form ===== */}
-      <section id="register" className="relative py-16 sm:py-24 border-t border-silver/10">
+      {/* ===== Bottom form (navy band) ===== */}
+      <section id="register" className="relative py-16 sm:py-24">
         <div
-          className="absolute inset-0 img-cover opacity-35"
+          className="absolute inset-0 img-cover"
           style={{ backgroundImage: `url('${IMG.formBg}')` }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night via-night/85 to-night" aria-hidden="true" />
+        <div className="absolute inset-0 bg-navy-deep/85" aria-hidden="true" />
         <div className="relative mx-auto max-w-2xl px-4">
           <div className="reveal text-center mb-9">
-            <p className="text-champagne text-sm font-bold tracking-wider mb-2">— {t.form.eyebrow}</p>
-            <h2 className="display-ar text-3xl sm:text-4xl text-silver-bright mb-3">{t.form.title}</h2>
-            <p className="text-silver/80">{t.form.sub}</p>
+            <p className="eyebrow-gold mb-3">{t.form.eyebrow}</p>
+            <h2 className={`text-3xl sm:text-4xl text-white mb-3 ${lang === "en" ? "display-en font-semibold" : "display-ar"}`}>
+              {t.form.title}
+            </h2>
+            <p className="text-white/80">{t.form.sub}</p>
           </div>
-          <div className="reveal card-sand rounded-3xl p-6 sm:p-9">
+          <div className="reveal bg-paper rounded-3xl p-6 sm:p-9 shadow-2xl">
             <LeadForm lang={lang} source="bottom" />
           </div>
           <div className="reveal flex flex-wrap justify-center gap-4 mt-8 text-sm">
-            <a href={`tel:${PHONE_INTL}`} onClick={onCall} dir="ltr" className="btn-ghost rounded-full px-6 py-3">
+            <a href={`tel:${PHONE_INTL}`} onClick={onCall} dir="ltr" className="btn-ghost-hero rounded-full px-6 py-3">
               📞 {PHONE_DISPLAY}
             </a>
             <a
@@ -529,90 +519,87 @@ export default function Page() {
       </section>
 
       {/* ===== Footer ===== */}
-      <footer className="bg-[#050e18] text-silver/70 py-14 pb-32 md:pb-14 border-t border-silver/10">
+      <footer className="bg-navy-deep text-white/70 py-14 pb-32 md:pb-14">
         <div className="mx-auto max-w-6xl px-4 grid md:grid-cols-3 gap-10">
           <div>
-            <div className="display-en text-xl silver-text mb-3">Silversands</div>
+            <div className="display-en font-semibold text-xl text-white mb-3">Silversands</div>
             <p className="text-sm leading-relaxed">{t.footer.about}</p>
           </div>
           <div>
-            <div className="font-bold text-silver-bright mb-3">{t.footer.linksTitle}</div>
+            <div className="font-bold text-white mb-3">{t.footer.linksTitle}</div>
             <ul className="space-y-2 text-sm">
               {t.footer.links.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="hover:text-champagne transition">{l.label}</a>
+                  <a href={l.href} className="hover:text-gold transition">{l.label}</a>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <div className="font-bold text-silver-bright mb-3">{t.footer.contactTitle}</div>
+            <div className="font-bold text-white mb-3">{t.footer.contactTitle}</div>
             <ul className="space-y-2 text-sm">
-              <li><a href={`tel:${PHONE_INTL}`} onClick={onCall} dir="ltr" className="hover:text-champagne">{PHONE_DISPLAY}</a></li>
-              <li><a href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer" className="hover:text-champagne">WhatsApp</a></li>
+              <li><a href={`tel:${PHONE_INTL}`} onClick={onCall} dir="ltr" className="hover:text-gold">{PHONE_DISPLAY}</a></li>
+              <li><a href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer" className="hover:text-gold">WhatsApp</a></li>
               <li>{t.footer.location}</li>
             </ul>
           </div>
         </div>
-        <div className="mx-auto max-w-6xl px-4 mt-10 pt-8 border-t border-silver/10">
-          <p className="text-xs leading-relaxed text-silver/45 mb-4">{t.footer.disclaimer}</p>
-          <p className="text-xs text-silver/35">© {new Date().getFullYear()} · {t.footer.rights}</p>
+        <div className="mx-auto max-w-6xl px-4 mt-10 pt-8 border-t border-white/10">
+          <p className="text-xs leading-relaxed text-white/50 mb-4">{t.footer.disclaimer}</p>
+          <p className="text-xs text-white/40">© {new Date().getFullYear()} · {t.footer.rights}</p>
         </div>
       </footer>
 
-      {/* ===== Floating buttons (always visible) ===== */}
-      <div className="fixed bottom-24 md:bottom-8 end-4 md:end-6 z-50 flex flex-col gap-3 items-end">
+      {/* ===== Floating circles (reference style) ===== */}
+      <div className="fixed bottom-24 md:bottom-8 end-4 md:end-6 z-50 flex flex-col gap-3 items-center">
         <a
           href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer"
           aria-label={t.floating.wa}
-          className="btn-wa pulse rounded-full h-14 md:h-[3.4rem] px-0 md:px-6 w-14 md:w-auto flex items-center justify-center gap-2.5 text-base"
+          className="float-circle float-wa"
         >
-          <WaIcon size={26} />
-          <span className="hidden md:inline">{t.floating.wa}</span>
+          <WaIcon size={24} />
+          <span>{t.nav.whatsapp}</span>
         </a>
         <a
           href={`tel:${PHONE_INTL}`} onClick={onCall}
           aria-label={t.floating.call}
-          className="btn-gold pulse-gold rounded-full h-14 md:h-[3.4rem] px-0 md:px-6 w-14 md:w-auto flex items-center justify-center gap-2.5 text-base"
+          className="float-circle float-call"
         >
-          <PhoneIcon size={22} />
-          <span className="hidden md:inline">{t.floating.call}</span>
+          <PhoneIcon size={20} />
+          <span>{t.nav.call}</span>
         </a>
       </div>
 
       {/* ===== Sticky mobile bar ===== */}
-      <div className="fixed bottom-0 inset-x-0 z-40 md:hidden bg-night/95 backdrop-blur border-t border-silver/15 grid grid-cols-3 text-center text-sm font-bold">
-        <a href={`tel:${PHONE_INTL}`} onClick={onCall} className="py-4 text-silver-bright flex items-center justify-center gap-1.5">
+      <div className="fixed bottom-0 inset-x-0 z-40 md:hidden bg-white/97 backdrop-blur border-t border-[var(--line)] grid grid-cols-3 text-center text-sm font-bold">
+        <a href={`tel:${PHONE_INTL}`} onClick={onCall} className="py-4 text-navy flex items-center justify-center gap-1.5">
           <PhoneIcon size={17} /> {t.sticky.call}
         </a>
-        <a href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer" className="py-4 text-[#2ee27a] flex items-center justify-center gap-1.5 border-x border-silver/15">
+        <a href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer" className="py-4 text-teal flex items-center justify-center gap-1.5 border-x border-[var(--line)]">
           <WaIcon size={18} /> {t.sticky.wa}
         </a>
-        <button onClick={scrollToForm} className="py-4 bg-gradient-to-l from-[#e9c87f] to-[#c2933f] text-night">
-          💰 {t.sticky.form}
+        <button onClick={scrollToForm} className="py-4 btn-gold rounded-none">
+          {t.sticky.form}
         </button>
       </div>
 
       {/* ===== Popup ===== */}
       {popupOpen && (
         <div
-          className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[60] bg-navy-deep/70 flex items-center justify-center p-4"
           role="dialog" aria-modal="true"
           onClick={() => setPopupOpen(false)}
         >
-          <div
-            className="card-sand rounded-3xl max-w-md w-full p-8 text-center"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="bg-paper rounded-3xl max-w-md w-full p-8 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <div className="text-4xl mb-3">⏳</div>
-            <h3 className="display-ar text-2xl text-night mb-3">{t.popup.title}</h3>
+            <h3 className="display-ar text-2xl text-navy mb-3">{t.popup.title}</h3>
             <p className="text-ink/70 leading-relaxed mb-6">{t.popup.body}</p>
-            <button onClick={scrollToForm} className="btn-gold w-full rounded-xl py-4 mb-4">
+            <button onClick={scrollToForm} className="btn-gold w-full rounded-full py-4 mb-3">
               {t.popup.cta}
             </button>
             <a
               href={WA_URL} onClick={onWa} target="_blank" rel="noopener noreferrer"
-              className="btn-wa w-full rounded-xl py-3.5 mb-4 flex items-center justify-center gap-2"
+              className="btn-wa w-full rounded-full py-3.5 mb-4 flex items-center justify-center gap-2"
             >
               <WaIcon /> {t.nav.whatsapp}
             </a>
@@ -625,8 +612,8 @@ export default function Page() {
 
       {/* ===== Cookie ===== */}
       {!cookieOk && (
-        <div className="fixed bottom-[4.6rem] md:bottom-4 start-4 z-40 max-w-sm card-glass rounded-2xl p-4 flex items-center gap-4">
-          <p className="text-sm flex-1 text-silver-bright">{t.cookie.text}</p>
+        <div className="fixed bottom-[4.6rem] md:bottom-4 start-4 z-40 max-w-sm card rounded-2xl p-4 flex items-center gap-4">
+          <p className="text-sm flex-1 text-ink/80">{t.cookie.text}</p>
           <button
             onClick={() => { localStorage.setItem("cookie-ok", "1"); setCookieOk(true); }}
             className="btn-gold rounded-full px-5 py-2 text-sm"
