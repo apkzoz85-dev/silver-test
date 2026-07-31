@@ -6,23 +6,15 @@ import { writeFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const IMAGES = {
-  "hero.webp": "https://prod-images.nawy.com/processed/inventory/compounds/2545/cover-images/Silver%20Walk/high.webp",
-  "destination.webp": "https://prod-images.nawy.com/processed/compound_image/image/3239/high.webp",
+  "hero-1.webp": "https://prod-images.nawy.com/processed/compound_image/image/3239/high.webp",
+  "hero-2.webp": "https://prod-images.nawy.com/processed/compound_image/image/5251/default.webp",
+  "hero-3.webp": "https://prod-images.nawy.com/processed/compound_image/image/5248/default.webp",
+  "destination.webp": "https://prod-images.nawy.com/processed/compound_image/image/5254/default.webp",
   "unit-1.webp": "https://prod-images.nawy.com/processed/compound_image/image/5255/default.webp",
   "unit-2.webp": "https://prod-images.nawy.com/processed/compound_image/image/5250/default.webp",
-  "unit-3.webp": "https://prod-images.nawy.com/processed/compound_image/image/5254/default.webp",
+  "unit-3.webp": "https://prod-images.nawy.com/processed/inventory/compounds/2545/cover-images/Silver%20Walk/high.webp",
   "developer.webp": "https://prod-images.nawy.com/processed/compound_image/image/5249/default.webp",
   "form-bg.webp": "https://prod-images.nawy.com/processed/inventory/compounds/2546/cover-images/Silver%20Bay/high.webp",
-};
-
-const KEY_TO_FILE = {
-  hero: "hero.webp",
-  destination: "destination.webp",
-  unit1: "unit-1.webp",
-  unit2: "unit-2.webp",
-  unit3: "unit-3.webp",
-  developer: "developer.webp",
-  formBg: "form-bg.webp",
 };
 
 const outDir = path.join(process.cwd(), "public", "images");
@@ -45,8 +37,8 @@ for (const [name, url] of Object.entries(IMAGES)) {
 if (ok === Object.keys(IMAGES).length) {
   const imagesTs = path.join(process.cwd(), "lib", "images.ts");
   let src = await readFile(imagesTs, "utf8");
-  for (const [key, file] of Object.entries(KEY_TO_FILE)) {
-    src = src.replace(new RegExp(`(${key}:\\s*)"https://[^"]+"`), `$1"/images/${file}"`);
+  for (const [name, url] of Object.entries(IMAGES)) {
+    src = src.replaceAll(`"${url}"`, `"/images/${name}"`);
   }
   await writeFile(imagesTs, src);
   console.log("\n✓ تم تحويل lib/images.ts للمسارات المحلية — اعمل build تاني");

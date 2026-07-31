@@ -135,6 +135,14 @@ export default function Page() {
     setCookieOk(localStorage.getItem("cookie-ok") === "1");
   }, []);
 
+  // Hero slideshow — crossfade every 6s (respects reduced motion)
+  const [slide, setSlide] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => setSlide((s) => (s + 1) % IMG.heroSlides.length), 6000);
+    return () => clearInterval(id);
+  }, []);
+
   useEffect(() => {
     if (sessionStorage.getItem("popup-shown") === "1") return;
     const open = () => {
@@ -215,11 +223,14 @@ export default function Page() {
 
       {/* ===== Hero (reference style: full photo, light overlay) ===== */}
       <section className="relative min-h-[92vh] flex items-center">
-        <div
-          className="absolute inset-0 img-cover"
-          style={{ backgroundImage: `url('${IMG.hero}')` }}
-          aria-hidden="true"
-        />
+        {IMG.heroSlides.map((src, i) => (
+          <div
+            key={i}
+            className="absolute inset-0 img-cover transition-opacity duration-[1800ms] ease-in-out"
+            style={{ backgroundImage: `url('${src}')`, opacity: slide === i ? 1 : 0 }}
+            aria-hidden="true"
+          />
+        ))}
         <div className="absolute inset-0 bg-[#0c2434]/42" aria-hidden="true" />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-paper" aria-hidden="true" />
 
