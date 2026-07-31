@@ -19,7 +19,7 @@ const WA_MESSAGE = encodeURIComponent(
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
 // TODO: ضع مفتاح Web3Forms هنا
-const WEB3_KEY = "14be81e6-21a3-4887-8efe-69b2cd01061d";
+const WEB3_KEY = "b1109da6-f3f5-4cf1-8104-5a54d96da402";
 // ============================================================
 
 function useReveal() {
