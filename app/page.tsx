@@ -16,18 +16,21 @@ const CONV_FORM = "AW-18216441738/o_zeCKXjh9IcEIqvo-5D";
 const CONV_WA = "AW-18216441738/Yd3hCKjjh9IcEIqvo-5D";
 
 /* ═══════════════════════════════════════════════════
-   IMAGES — local paths in /public/images/
+   IMAGES — ORA official CDN (CloudFront)
 ═══════════════════════════════════════════════════ */
+const CDN = "https://d3lfybzdo3x59a.cloudfront.net/website-assets";
 const IMG = {
-  hero: "/images/hero.webp",
-  oraLogo: "/images/ora-logo.png",
-  ssLogo: "/images/silversands-logo.png",
-  lagoon: "/images/lagoon.webp",
-  pool: "/images/pool.webp",
-  villa: "/images/villa.webp",
-  aerial: "/images/aerial.webp",
-  cabin: "/images/cabin.webp",
-  founder: "/images/naguib-sawiris.jpg",
+  hero: `${CDN}/SS-north-coast1.png`,
+  oraLogo: "https://www.oradevelopers.com/_nuxt/img/ora-logo-greyer.52c8cfb.png",
+  ssLogo: "https://www.oradevelopers.com/_nuxt/img/ora-logo-greyer.52c8cfb.png",
+  lagoon: `${CDN}/WATG04_Silvertown_CGI15_03%20(1).jpg`,
+  pool: `${CDN}/WATG04_Silvertown_CGI04_04.jpg`,
+  villa: `${CDN}/1A-Back-Final-2-m10.JPG`,
+  aerial: `${CDN}/2B-Back-Dusk-m4-FINAL.jpg`,
+  cabin: `${CDN}/1B-back-Final-amends-m3.jpg`,
+  founder: `${CDN}/ns-teampage.png`,
+  interior: `${CDN}/VILLA-1A-LIVING-AREA.jpg`,
+  town: `${CDN}/WATG04_Silvertown_CGI01_03.jpg`,
 };
 
 /* ═══════════════════════════════════════════════════
@@ -198,9 +201,11 @@ const UNITS = [
 
 const GALLERY = [
   { s: IMG.lagoon, ar: "بحيرة سيلفر ساندس أورا الكريستالية", en: "Silver Sands ORA Crystal Lagoon" },
-  { s: IMG.pool, ar: "مسابح سيلفر ساندس أورا", en: "Silver Sands ORA Pools" },
-  { s: IMG.aerial, ar: "سيلفر ساندس أورا من الجو", en: "Silver Sands ORA Aerial" },
+  { s: IMG.pool, ar: "مسابح سيلفر ساندس أورا", en: "Silver Sands ORA Town View" },
+  { s: IMG.aerial, ar: "سيلفر ساندس أورا — إطلالة مسائية", en: "Silver Sands ORA Dusk View" },
   { s: IMG.villa, ar: "فيلات سيلفر ساندس أورا", en: "Silver Sands ORA Villas" },
+  { s: IMG.interior, ar: "تصميم داخلي فاخر — سيلفر ساندس أورا", en: "Silver Sands ORA Luxury Interior" },
+  { s: IMG.town, ar: "المنطقة التجارية — سيلفر ساندس أورا", en: "Silver Sands ORA Town Center" },
 ];
 
 /* ═══ COMPONENT ═══ */

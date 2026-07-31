@@ -9,7 +9,7 @@ export default function ThankYou(){
   },[]);
   return(
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:"#0a0a0a",padding:"40px 24px",fontFamily:"'Inter',sans-serif",textAlign:"center",color:"#fff"}}>
-      <img src="/images/ora-logo.png" alt="ORA أورا" style={{height:44,marginBottom:24,opacity:.7}}/>
+      <img src="https://www.oradevelopers.com/_nuxt/img/ora-logo-greyer.52c8cfb.png" alt="ORA أورا" style={{height:44,marginBottom:24,opacity:.7}}/>
       <div style={{width:72,height:72,borderRadius:"50%",background:"rgba(201,168,76,.1)",border:"2px solid rgba(201,168,76,.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:36,marginBottom:20,color:"#c9a84c"}}>✓</div>
       <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,5vw,40px)",fontWeight:600,marginBottom:10}}>شكراً — Thank You!</h1>
       <p style={{fontSize:14,color:"rgba(255,255,255,.6)",maxWidth:460,lineHeight:1.7,marginBottom:6,fontFamily:"'IBM Plex Sans Arabic',sans-serif"}}>فريق <strong style={{color:"#c9a84c"}}>سيلفر ساندس أورا — Silver Sands ORA</strong> هيتواصل معاك قريب بالأسعار والتفاصيل الحصرية.</p>
