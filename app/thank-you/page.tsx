@@ -1,25 +1,44 @@
-"use client";
-import{useEffect}from"react";
-const PI="+201123863254",PD="0112 386 3254";
-const WU=`https://wa.me/201123863254?text=${encodeURIComponent("مرحباً، لسه سجلت في سيلفر ساندس أورا — Silver Sands ORA")}`;
-export default function ThankYou(){
-  useEffect(()=>{
-    // Google Ads Conversion
-    // const w=window as any;if(w.gtag)w.gtag("event","conversion",{send_to:"AW-XXXXXXX/XXXXXXX"});
-  },[]);
-  return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:"#0a0a0a",padding:"40px 24px",fontFamily:"'Inter',sans-serif",textAlign:"center",color:"#fff"}}>
-      <img src="https://www.oradevelopers.com/_nuxt/img/ora-logo-greyer.52c8cfb.png" alt="ORA أورا" style={{height:44,marginBottom:24,opacity:.7}}/>
-      <div style={{width:72,height:72,borderRadius:"50%",background:"rgba(201,168,76,.1)",border:"2px solid rgba(201,168,76,.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:36,marginBottom:20,color:"#c9a84c"}}>✓</div>
-      <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,5vw,40px)",fontWeight:600,marginBottom:10}}>شكراً — Thank You!</h1>
-      <p style={{fontSize:14,color:"rgba(255,255,255,.6)",maxWidth:460,lineHeight:1.7,marginBottom:6,fontFamily:"'IBM Plex Sans Arabic',sans-serif"}}>فريق <strong style={{color:"#c9a84c"}}>سيلفر ساندس أورا — Silver Sands ORA</strong> هيتواصل معاك قريب بالأسعار والتفاصيل الحصرية.</p>
-      <p style={{fontSize:11,color:"rgba(255,255,255,.3)",marginBottom:28}}>سيلفر ساندس الساحل الشمالي · Silver Sands North Coast · أورا ORA</p>
-      <div style={{display:"flex",gap:10,flexWrap:"wrap",justifyContent:"center",marginBottom:28}}>
-        <a href={WU} target="_blank" rel="noopener" style={{display:"flex",alignItems:"center",gap:7,padding:"13px 26px",background:"#25d366",color:"#fff",borderRadius:10,fontSize:13,fontWeight:700,textDecoration:"none"}}>💬 واتساب · WhatsApp</a>
-        <a href={`tel:${PI}`} style={{display:"flex",alignItems:"center",gap:7,padding:"13px 26px",border:"1px solid rgba(201,168,76,.3)",color:"#c9a84c",borderRadius:10,fontSize:13,fontWeight:700,textDecoration:"none"}}>{PD}</a>
-        <a href="/" style={{padding:"13px 26px",border:"1px solid rgba(255,255,255,.1)",color:"rgba(255,255,255,.5)",borderRadius:10,fontSize:12,textDecoration:"none"}}>← العودة · Back</a>
+import Link from "next/link";
+
+export const metadata = {
+  title: "تم استلام طلبك — سيلفر ووك & سيلفر باي",
+  robots: { index: false },
+};
+
+const PHONE_INTL = "+201123863254";
+const WA_URL =
+  "https://wa.me/201123863254?text=" +
+  encodeURIComponent("مرحبًا، سجلت اهتمامي بسيلفر ووك & سيلفر باي وأريد التفاصيل");
+
+export default function ThankYou() {
+  return (
+    <main className="min-h-screen flex items-center justify-center px-4 lagoon-hero text-white">
+      <div className="bg-white text-ink rounded-3xl max-w-lg w-full p-10 text-center shadow-2xl">
+        <div className="text-5xl mb-4">🎉</div>
+        <h1 className="text-3xl font-bold text-lagoon-deep mb-4">تم استلام طلبك بنجاح</h1>
+        <p className="text-ink/70 leading-relaxed mb-8">
+          فريقنا هيتواصل معاك في أقرب وقت بكل تفاصيل سيلفر ووك & سيلفر باي — الماستر بلان، الأسعار
+          الرسمية، وخطط السداد.
+        </p>
+        <a
+          href={WA_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full bg-lagoon-deep text-white font-bold rounded-full py-3.5 mb-3 hover:bg-lagoon transition"
+        >
+          💬 أو كلمنا واتساب فورًا
+        </a>
+        <a
+          href={`tel:${PHONE_INTL}`}
+          className="block w-full border border-shell rounded-full py-3.5 mb-3 font-semibold text-lagoon-deep hover:bg-sand transition"
+          dir="ltr"
+        >
+          📞 011 2386 3254
+        </a>
+        <Link href="/" className="text-sm text-ink/50 hover:text-ink">
+          الرجوع للصفحة الرئيسية
+        </Link>
       </div>
-      <p style={{fontSize:8,color:"rgba(255,255,255,.15)",marginTop:20}}>© 2026 ORA Developers · أورا · سيلفر ساندس Silver Sands</p>
-    </div>
+    </main>
   );
 }
