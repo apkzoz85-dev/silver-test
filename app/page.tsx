@@ -16,21 +16,26 @@ const CONV_FORM = "AW-18216441738/o_zeCKXjh9IcEIqvo-5D";
 const CONV_WA = "AW-18216441738/Yd3hCKjjh9IcEIqvo-5D";
 
 /* ═══════════════════════════════════════════════════
-   IMAGES — ORA official CDN (CloudFront)
+   IMAGES — ORA CDN + Nawy CDN
 ═══════════════════════════════════════════════════ */
-const CDN = "https://d3lfybzdo3x59a.cloudfront.net/website-assets";
+const ORA = "https://d3lfybzdo3x59a.cloudfront.net/website-assets";
+const NAWY = "https://prod-images.nawy.com/processed";
 const IMG = {
-  hero: `${CDN}/SS-north-coast1.png`,
+  hero: `${ORA}/SS-north-coast1.png`,
+  hero2: `${NAWY}/compound_image/image/3239/high.webp`,
   oraLogo: "https://www.oradevelopers.com/_nuxt/img/ora-logo-greyer.52c8cfb.png",
   ssLogo: "https://www.oradevelopers.com/_nuxt/img/ora-logo-greyer.52c8cfb.png",
-  lagoon: `${CDN}/WATG04_Silvertown_CGI15_03%20(1).jpg`,
-  pool: `${CDN}/WATG04_Silvertown_CGI04_04.jpg`,
-  villa: `${CDN}/1A-Back-Final-2-m10.JPG`,
-  aerial: `${CDN}/2B-Back-Dusk-m4-FINAL.jpg`,
-  cabin: `${CDN}/1B-back-Final-amends-m3.jpg`,
-  founder: `${CDN}/ns-teampage.png`,
-  interior: `${CDN}/VILLA-1A-LIVING-AREA.jpg`,
-  town: `${CDN}/WATG04_Silvertown_CGI01_03.jpg`,
+  lagoon: `${ORA}/WATG04_Silvertown_CGI15_03%20(1).jpg`,
+  pool: `${NAWY}/compound_image/image/5250/default.webp`,
+  villa: `${ORA}/1A-Back-Final-2-m10.JPG`,
+  aerial: `${ORA}/2B-Back-Dusk-m4-FINAL.jpg`,
+  cabin: `${NAWY}/inventory/compounds/2546/cover-images/Silver%20Bay/high.webp`,
+  walk: `${NAWY}/inventory/compounds/2545/cover-images/Silver%20Walk/high.webp`,
+  founder: `${ORA}/ns-teampage.png`,
+  interior: `${ORA}/VILLA-1A-LIVING-AREA.jpg`,
+  town: `${ORA}/WATG04_Silvertown_CGI01_03.jpg`,
+  overview1: `${NAWY}/compound_image/image/5255/default.webp`,
+  overview2: `${NAWY}/compound_image/image/5254/default.webp`,
 };
 
 /* ═══════════════════════════════════════════════════
@@ -200,8 +205,8 @@ const UNITS = [
 ];
 
 const GALLERY = [
+  { s: IMG.overview1, ar: "سيلفر ساندس أورا — المشروع", en: "Silver Sands ORA Overview" },
   { s: IMG.lagoon, ar: "بحيرة سيلفر ساندس أورا الكريستالية", en: "Silver Sands ORA Crystal Lagoon" },
-  { s: IMG.pool, ar: "مسابح سيلفر ساندس أورا", en: "Silver Sands ORA Town View" },
   { s: IMG.aerial, ar: "سيلفر ساندس أورا — إطلالة مسائية", en: "Silver Sands ORA Dusk View" },
   { s: IMG.villa, ar: "فيلات سيلفر ساندس أورا", en: "Silver Sands ORA Villas" },
   { s: IMG.interior, ar: "تصميم داخلي فاخر — سيلفر ساندس أورا", en: "Silver Sands ORA Luxury Interior" },
@@ -316,7 +321,7 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero" id="hero">
-        <div className="hero-bg"><img src={IMG.hero} alt="سيلفر ساندس أورا Silver Sands ORA" /><div className="hero-overlay" /></div>
+        <div className="hero-bg"><img src={IMG.hero} alt="سيلفر ساندس أورا Silver Sands ORA" onError={(e: any) => { e.target.onerror = null; e.target.src = IMG.hero2; }} /><div className="hero-overlay" /></div>
         <div className="hero-in">
           <div className="hero-left">
             <p className="eyebrow">{t.hero_eyebrow}</p>
@@ -394,7 +399,7 @@ export default function Home() {
             </div>
           </div>
           <div className="coll-card">
-            <div className="coll-img"><img src={IMG.pool} alt="Silver Walk" /></div>
+            <div className="coll-img"><img src={IMG.walk} alt="Silver Walk" /></div>
             <div className="coll-info">
               <h3>{t.walk_name}</h3><span className="coll-tag">{t.walk_tag}</span>
               <p>{t.walk_desc}</p>
