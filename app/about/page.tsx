@@ -19,7 +19,7 @@ export default function About() {
         نعمل على ترشيح العملاء الجادين لفريق مبيعات المشروع مباشرة.
       </p>
       <p>
-        للتواصل: <a href="tel:+201123863254" className="text-lagoon font-semibold" dir="ltr">011 2386 3254</a>
+        للتواصل: <a href="tel:+201123863254" className="text-champagne font-semibold" dir="ltr">011 2386 3254</a>
       </p>
     </LegalShell>
   );

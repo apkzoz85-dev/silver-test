@@ -21,7 +21,7 @@ export default function Privacy() {
       <p>
         <strong>حقوقك:</strong> يحق لك في أي وقت طلب حذف بياناتك أو التوقف عن التواصل معك، وذلك
         بالتواصل معنا على{" "}
-        <a href="tel:+201123863254" className="text-lagoon font-semibold" dir="ltr">011 2386 3254</a>{" "}
+        <a href="tel:+201123863254" className="text-champagne font-semibold" dir="ltr">011 2386 3254</a>{" "}
         أو عبر واتساب.
       </p>
     </LegalShell>
