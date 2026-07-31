@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { content, type Lang } from "@/lib/content";
+import { IMG } from "@/lib/images";
 import { trackCall, trackFormLead, trackWhatsApp } from "@/lib/tracking";
 
 // ============================================================
@@ -224,13 +225,13 @@ export default function Page() {
 
       {/* ===== Hero ===== */}
       <section className="hero-night relative">
-        {/* Optional hero image slot: put /public/images/hero.jpg */}
+        {/* Hero render (official) — run scripts/download-images.mjs to localize */}
         <div
-          className="absolute inset-0 img-cover opacity-40"
-          style={{ backgroundImage: "url('/images/hero.jpg')" }}
+          className="absolute inset-0 img-cover opacity-55"
+          style={{ backgroundImage: `url('${IMG.hero}')` }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-night/70 via-night/40 to-night" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-night/80 via-night/30 to-night" aria-hidden="true" />
         <div className="relative mx-auto max-w-6xl px-4 pt-14 pb-20 sm:pt-20 sm:pb-24 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
           <div>
             <p className="text-champagne text-sm sm:text-base font-semibold tracking-wide mb-4">
@@ -312,7 +313,7 @@ export default function Page() {
           className="reveal rounded-3xl h-72 sm:h-96 img-cover border border-silver/15"
           style={{
             backgroundImage:
-              "linear-gradient(150deg, rgba(214,183,124,0.25), rgba(8,22,37,0.4)), radial-gradient(600px 300px at 30% 20%, #14304c, #0c2136), url('/images/destination.jpg')",
+              `linear-gradient(150deg, rgba(214,183,124,0.18), rgba(8,22,37,0.35)), url('${IMG.destination}'), radial-gradient(600px 300px at 30% 20%, #14304c, #0c2136)`,
           }}
           role="img"
           aria-label="Silversands"
@@ -365,7 +366,7 @@ export default function Page() {
                 <div
                   className="h-44 img-cover relative"
                   style={{
-                    backgroundImage: `linear-gradient(160deg, rgba(8,22,37,0.25), rgba(8,22,37,0.55)), linear-gradient(${140 + i * 40}deg, #14304c, #0c2136 60%, #123a56), url('/images/unit-${i + 1}.jpg')`,
+                    backgroundImage: `linear-gradient(160deg, rgba(8,22,37,0.15), rgba(8,22,37,0.5)), url('${[IMG.unit1, IMG.unit2, IMG.unit3][i]}'), linear-gradient(${140 + i * 40}deg, #14304c, #0c2136 60%, #123a56)`,
                   }}
                 >
                   <span className="absolute top-4 start-4 bg-gradient-to-l from-[#e9c87f] to-[#c2933f] text-night text-xs font-extrabold rounded-full px-3.5 py-1.5">
@@ -441,7 +442,7 @@ export default function Page() {
             className="rounded-3xl h-72 sm:h-96 img-cover border border-silver/15 relative"
             style={{
               backgroundImage:
-                "linear-gradient(160deg, rgba(8,22,37,0.3), rgba(8,22,37,0.6)), radial-gradient(500px 320px at 70% 30%, #1a3d5c, #0c2136), url('/images/developer.jpg')",
+                `linear-gradient(160deg, rgba(8,22,37,0.25), rgba(8,22,37,0.55)), url('${IMG.developer}'), radial-gradient(500px 320px at 70% 30%, #1a3d5c, #0c2136)`,
             }}
             role="img"
             aria-label="ORA Developers"
@@ -499,8 +500,8 @@ export default function Page() {
       {/* ===== Bottom form ===== */}
       <section id="register" className="relative py-16 sm:py-24 border-t border-silver/10">
         <div
-          className="absolute inset-0 img-cover opacity-25"
-          style={{ backgroundImage: "url('/images/form-bg.jpg')" }}
+          className="absolute inset-0 img-cover opacity-35"
+          style={{ backgroundImage: `url('${IMG.formBg}')` }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-night via-night/85 to-night" aria-hidden="true" />
