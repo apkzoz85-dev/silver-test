@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 /* ═══════════════════════════════════════════════════
    CONSTANTS — update these per project
 ═══════════════════════════════════════════════════ */
-const PHONE = "01123863254";
-const PHONE_DISPLAY = "0112 386 3254";
-const PHONE_INTL = "+201123863254";
-const WA_NUMBER = "201123863254";
+const PHONE = "01001050018";
+const PHONE_DISPLAY = "0100 105 0018";
+const PHONE_INTL = "+201001050018";
+const WA_NUMBER = "201001050018";
 const WEB3_KEY = "14be81e6-21a3-4887-8efe-69b2cd01061d";
 
 const GA_TAG = "AW-18216441738";
